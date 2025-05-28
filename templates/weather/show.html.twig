@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Погода{% endblock %}
+
+{% block body %}
+    <h1>Поточна погода</h1>
+
+    {% if error is defined %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        <ul>
+            <li>Місто: {{ weather.city }}, {{ weather.country }}</li>
+            <li>Температура: {{ weather.temperature }}°C</li>
+            <li>Стан: {{ weather.condition }}</li>
+            <li>Вологість: {{ weather.humidity }}%</li>
+            <li>Швидкість вітру: {{ weather.wind_speed }} км/г</li>
+            <li>Оновлено: {{ weather.last_updated }}</li>
+        </ul>
+    {% endif %}
+{% endblock %}
