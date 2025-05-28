@@ -4,29 +4,29 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 imports:
-    - { resource: packages/weather.yaml }
+  - { resource: packages/weather.yaml }
 
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
 
-    App\WeatherProvider\WeatherApiClient:
-        arguments:
-            $apiKey: '%weather.api_key%'
-            $apiBaseUrl: '%weather.api_base_url%'
-            $logger: '@logger'
-        public: true
+  App\WeatherProvider\WeatherApiClient:
+    arguments:
+      $apiKey: '%weather.api_key%'
+      $apiBaseUrl: '%weather.api_base_url%'
+      $logger: '@logger'
+    public: true
 
-    App\WeatherProvider\WeatherProviderInterface:
-        alias: App\WeatherProvider\WeatherApiClient
-        public: true
+  App\WeatherProvider\WeatherProviderInterface:
+    alias: App\WeatherProvider\WeatherApiClient
+    public: true
 
-    App\Service\WeatherService:
-        arguments:
-            $weatherProvider: '@App\WeatherProvider\WeatherProviderInterface'
+  App\Service\WeatherService:
+    arguments:
+      $weatherProvider: '@App\WeatherProvider\WeatherProviderInterface'
 
-    App\Controller\:
-        resource: '../src/Controller'
-        tags: [ 'controller.service_arguments' ]
+  App\Controller\:
+    resource: '../src/Controller'
+    tags: [ 'controller.service_arguments' ]

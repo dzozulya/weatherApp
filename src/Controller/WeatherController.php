@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Exception\WeatherProviderException;
@@ -11,27 +12,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class WeatherController extends AbstractController
 {
 
-private WeatherService $weatherService;
+    private WeatherService $weatherService;
 
-public function __construct(WeatherService $weatherService)
-{
-    $this->weatherService = $weatherService;
-}
-#[Route('/weather', name: 'weather')]
-public function show(Request $request,): Response
-{
-$city = $request->query->get('city', 'London');
+    public function __construct(WeatherService $weatherService)
+    {
+        $this->weatherService = $weatherService;
+    }
 
-try {
-$weather = $this->weatherService->getWeather($city);
-} catch (WeatherProviderException $e) {
-return $this->render('weather/show.html.twig', [
-'error' => $e->getMessage(),
-]);
-}
+    #[Route('/weather', name: 'weather')]
+    public function show(Request $request): Response
+    {
+        $city = $request->query->get('city', 'London');
 
-return $this->render('weather/show.html.twig', [
-'weather' => $weather,
-]);
-}
+        try {
+            $weather = $this->weatherService->getWeather($city);
+        } catch (WeatherProviderException $e) {
+            return $this->render('weather/show.html.twig', [
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return $this->render('weather/show.html.twig', [
+            'weather' => $weather,
+        ]);
+    }
 }
