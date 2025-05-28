@@ -5,7 +5,7 @@
 ```
 bash
 git clone git@github.com:dzozulya/weatherApp.git
-cd symfony-weather
+cd weatherApp
 composer install
 cp .env .env.local
 додати WEATHER_API_KEY(свій ключ АПІ) до .env.local
